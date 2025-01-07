@@ -38,8 +38,8 @@ Ensure the following are installed on your system:
 Clone the project repository to your local machine:
 
 ```bash
-git clone https://github.com/yourusername/jvm-monitoring-tool.git
-cd jvm-monitoring-tool
+git clone https://github.com/HassanBouighamdane/JVM-Monitoring.git
+cd JVM-Monitoring
 ```
 ## Build and Run
 Build and run the application using the following commands:
@@ -58,11 +58,11 @@ You can now run the executable from any location on your machine using the follo
 - On Unix-based systems:
 
   ```bash
-  ./your_project_name
+  ./jvm_monitor
   ```
 
 - On Windows:
 
   ```bash
-  .\your_project_name.exe
+  .\jvm_monitor.exe
   ```
