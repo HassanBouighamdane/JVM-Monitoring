@@ -10,7 +10,6 @@ use tui::{backend::CrosstermBackend, Terminal};
 pub mod app;
 pub mod components;
 pub mod state;
-//pub mod stateful_list;
 pub mod ui;
 
 fn main() -> Result<(), Box<dyn Error>> {
@@ -20,7 +19,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let backend = CrosstermBackend::new(stdout);
     let mut terminal = Terminal::new(backend)?;
 
-    let tick_rate = Duration::from_secs(1);
+    let tick_rate = Duration::from_millis(500);
     let mut app = App::new();
     let res = app.run(&mut terminal, tick_rate);
 

@@ -67,12 +67,15 @@ impl App {
                 if let Event::Key(key) = event::read()? {
                     match self.view_state {
                         ViewState::JVMList => match key.code {
-                            KeyCode::Char('q') => return Ok(()), // Quit
-                            KeyCode::Down => self.state.select_next_jvm(), // Navigate JVM list
-                            KeyCode::Up => self.state.select_previous_jvm(), // Navigate JVM list
+                            KeyCode::Char('q') => return Ok(()),
+                            KeyCode::Down => self.state.select_next_jvm(), 
+                            KeyCode::Up => self.state.select_previous_jvm(), 
                             KeyCode::Enter => {
-                                self.state.refresh(); // Fetch metrics for the selected JVM
+                                self.state.refresh(); 
                                 self.view_state = ViewState::JVMDetails;
+                            },
+                            KeyCode::Char('r') => {
+                                self.state.refresh_jvm_list();
                             }
                             _ => {}
                         },
@@ -80,7 +83,9 @@ impl App {
                             KeyCode::Char('q') => return Ok(()), // Quit
                             KeyCode::Down => self.state.select_next_thread(), // Navigate thread list
                             KeyCode::Up => self.state.select_previous_thread(), // Navigate thread list
-                            KeyCode::Char('b') => self.view_state = ViewState::JVMList, // Back to JVM list
+                            KeyCode::Char('b') => {
+                                self.state.refresh_jvm_list();
+                                self.view_state = ViewState::JVMList; }
                             _ => {}
                         },
                     }

@@ -2,10 +2,10 @@ use std::process::Command;
 use tui::widgets::TableState;
 
 pub struct State {
-    pub jvms: Vec<(u32, String)>,          // List of JVMs
-    pub selected_jvm: TableState,          // Tracks the selected JVM
-    pub metrics: Option<(String, String)>, // Memory and thread metrics for the selected JVM
-    pub thread_state: TableState,          // Tracks the selected thread in the thread list
+    pub jvms: Vec<(u32, String)>,          
+    pub selected_jvm: TableState,          
+    pub metrics: Option<(String, String)>,
+    pub thread_state: TableState,         
 }
 
 impl State {
@@ -18,6 +18,11 @@ impl State {
         }
     }
 
+    pub fn refresh_jvm_list(&mut self) {
+        self.jvms = fetch_jvms();
+        self.selected_jvm.select(None); // Clear the selection when refreshing
+    }
+    
     /// Refresh data for the currently selected JVM
     pub fn refresh(&mut self) {
         if let Some(selected) = self.selected_jvm.selected() {
