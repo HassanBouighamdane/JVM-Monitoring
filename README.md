@@ -58,11 +58,11 @@ You can now run the executable from any location on your machine using the follo
 - On Unix-based systems:
 
   ```bash
-  ./jvm_monitor
+  ./jvm_monitoring
   ```
 
 - On Windows:
 
   ```bash
-  .\jvm_monitor.exe
+  .\jvm_monitoring.exe
   ```
