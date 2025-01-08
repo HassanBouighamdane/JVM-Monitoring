@@ -31,7 +31,7 @@ impl App {
         let current_selected_thread = self.state.thread_state.selected();
     
         // Refresh the state (fetch new memory and thread metrics for the selected JVM)
-        self.state.refresh();
+        self.state.refresh_jvm_details();
     
         // Restore the previously selected thread if still valid
         if let Some((_, thread_metrics)) = &self.state.metrics {
@@ -54,6 +54,7 @@ impl App {
         tick_rate: Duration,
     ) -> io::Result<()> {
         let mut last_tick = Instant::now();
+        let mut last_key_event = Instant::now();
         loop {
             // Draw the UI
             terminal.draw(|f| ui(f, self))?;
@@ -65,13 +66,16 @@ impl App {
     
             if crossterm::event::poll(timeout)? {
                 if let Event::Key(key) = event::read()? {
+                    if last_key_event.elapsed() > Duration::from_millis(500) {
+                        last_key_event = Instant::now(); 
+                        
                     match self.view_state {
                         ViewState::JVMList => match key.code {
                             KeyCode::Char('q') => return Ok(()),
                             KeyCode::Down => self.state.select_next_jvm(), 
                             KeyCode::Up => self.state.select_previous_jvm(), 
                             KeyCode::Enter => {
-                                self.state.refresh(); 
+                                self.state.refresh_jvm_details(); 
                                 self.view_state = ViewState::JVMDetails;
                             },
                             KeyCode::Char('r') => {
@@ -99,5 +103,5 @@ impl App {
             }
         }
     }
-    
+} 
 }

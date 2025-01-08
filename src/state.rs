@@ -24,7 +24,7 @@ impl State {
     }
     
     /// Refresh data for the currently selected JVM
-    pub fn refresh(&mut self) {
+    pub fn refresh_jvm_details(&mut self) {
         if let Some(selected) = self.selected_jvm.selected() {
             if let Some((pid, _)) = self.jvms.get(selected) {
                 self.metrics = Some(fetch_jvm_metrics(*pid));
@@ -35,7 +35,13 @@ impl State {
     /// Select the next JVM in the list
     pub fn select_next_jvm(&mut self) {
         let i = match self.selected_jvm.selected() {
-            Some(i) => (i + 1) % self.jvms.len(),
+            Some(i) => {
+                if i >= self.jvms.len() - 1 {
+                    0
+                } else {
+                    i + 1
+                }
+            }
             None => 0,
         };
         self.selected_jvm.select(Some(i));
