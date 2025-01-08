@@ -11,6 +11,8 @@ pub mod app;
 pub mod components;
 pub mod state;
 pub mod ui;
+pub mod metrics;
+pub mod utils;
 
 fn main() -> Result<(), Box<dyn Error>> {
     enable_raw_mode()?;

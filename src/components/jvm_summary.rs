@@ -5,46 +5,12 @@ use tui::{
 };
 
 use crate::state::State;
-
-fn parse_memory_line(line: &str, remove_index: bool) -> String {
-    let cleaned_line = if remove_index {
-        // Remove memory index part if exists
-        line.split('[').next().unwrap_or(line).trim()
-    } else {
-        line
-    };
-
-    cleaned_line
-        .split_whitespace()
-        .map(|word| {
-            if word.ends_with("K") {
-                if let Ok(kb) = word[..word.len() - 1].parse::<f64>() {
-                    format!("{:.2} MB", kb / 1024.0)
-                } else {
-                    word.to_string()
-                }
-            } else if word.ends_with("MB") {
-                word.to_string()
-            } else {
-                word.to_string()
-            }
-        })
-        .collect::<Vec<String>>()
-        .join(" ")
-}
+use crate::utils::parse_memory_line;
 
 pub fn jvm_summary(state: &State) -> List {
     if let Some((memory_metrics, _)) = &state.metrics {
         // Parse and format the memory metrics
         let lines: Vec<&str> = memory_metrics.lines().collect();
-
-        // Heap memory data
-        let heap_info = parse_memory_line(lines.get(1).unwrap_or(&"").trim(), true);
-        let region_info = parse_memory_line(lines.get(2).unwrap_or(&"").trim(), false);
-
-        // Metaspace and Class space data
-        let metaspace_info = parse_memory_line(lines.get(3).unwrap_or(&"").trim(), false);
-        let class_space_info = parse_memory_line(lines.get(4).unwrap_or(&"").trim(), false);
 
         // Add selected JVM PID and description
         let jvm_info = if let Some(selected) = state.selected_jvm.selected() {
@@ -68,6 +34,16 @@ pub fn jvm_summary(state: &State) -> List {
         } else {
             vec![Spans::from(Span::raw("No JVM selected."))]
         };
+
+        // Heap memory data
+        let heap_info = parse_memory_line(lines.get(1).unwrap_or(&"").trim(), true);
+        let region_info = parse_memory_line(lines.get(2).unwrap_or(&"").trim(), false);
+
+        // Metaspace and Class space data
+        let metaspace_info = parse_memory_line(lines.get(3).unwrap_or(&"").trim(), false);
+        let class_space_info = parse_memory_line(lines.get(4).unwrap_or(&"").trim(), false);
+
+       
 
         // Build structured memory details
         let memory_lines = vec![
