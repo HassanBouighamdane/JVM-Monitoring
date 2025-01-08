@@ -55,6 +55,7 @@ impl App {
     ) -> io::Result<()> {
         let mut last_tick = Instant::now();
         let mut last_key_event = Instant::now();
+
         loop {
             // Draw the UI
             terminal.draw(|f| ui(f, self))?;
@@ -66,9 +67,8 @@ impl App {
     
             if crossterm::event::poll(timeout)? {
                 if let Event::Key(key) = event::read()? {
-                    if last_key_event.elapsed() > Duration::from_millis(500) {
-                        last_key_event = Instant::now(); 
-                        
+                    if last_key_event.elapsed() > Duration::from_millis(200) {
+                        last_key_event = Instant::now(); // Update last key event time
                     match self.view_state {
                         ViewState::JVMList => match key.code {
                             KeyCode::Char('q') => return Ok(()),
@@ -95,7 +95,7 @@ impl App {
                     }
                 }
             }
-    
+        }
             // Refresh the state periodically based on the tick rate
             if last_tick.elapsed() >= tick_rate {
                 self.on_tick();
@@ -103,5 +103,6 @@ impl App {
             }
         }
     }
-} 
+    
+    
 }
