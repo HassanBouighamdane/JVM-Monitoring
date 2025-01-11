@@ -41,7 +41,7 @@ The following figure shows an example of the list:
 
 
 2. **JVM details overview**:
-After choosing a JVM and clocking **Enter** button, the following figure appears to show the details of the JVM.
+After choosing a JVM and clicking the **Enter** button, the following figure dispalys to show the details of the JVM.
 
 
 ![JVM details overview](figures/jvm_all.png)
