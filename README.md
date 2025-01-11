@@ -89,7 +89,9 @@ This part shows the list of all the threads in the JVM, we can go up and down to
 5. **Thread details**:
 
 This section displays detailed information about a selected thread. Once a thread is selected from the list, its detailed information is shown. These details include:
+
 ![Thread details](figures/thread_details.png)
+
    - ***Thread Name***:The name of the thread as identified in the JVM.
 
    - ***Thread State***: The current state of the thread (e.g., RUNNABLE, WAITING).
