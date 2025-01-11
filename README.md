@@ -83,6 +83,7 @@ This part contains the details of the JVM
 4. **Thread List**:
 
 This part shows the list of all the threads in the JVM, we can go up and down to choose on of the thread we want to show its details.
+
 ![Thread List](figures/thread_list.png)
 
 5. **Thread details**:
